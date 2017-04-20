@@ -65,6 +65,11 @@ namespace Samurai_CMS.ViewModels
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Name")]
+        [MaxLength(20)]
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

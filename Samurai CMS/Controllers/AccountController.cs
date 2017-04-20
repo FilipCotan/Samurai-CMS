@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity.Validation;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Samurai_CMS.DAL;
 using Samurai_CMS.ViewModels;
 using Samurai_CMS.Models;
 
@@ -15,15 +18,18 @@ namespace Samurai_CMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly ApplicationDbContext _dbContext;
 
         public AccountController()
         {
+            _dbContext = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext dbContext)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _dbContext = dbContext;
         }
 
         public ApplicationSignInManager SignInManager
@@ -147,10 +153,38 @@ namespace Samurai_CMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Role = GetDefaultUserRole()
+                };
+
+                IdentityResult result;
+
+                try
+                {
+                    result = await UserManager.CreateAsync(user, model.Password);
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -403,6 +437,8 @@ namespace Samurai_CMS.Controllers
 
         protected override void Dispose(bool disposing)
         {
+            _dbContext.Dispose();
+
             if (disposing)
             {
                 if (_userManager != null)
@@ -422,16 +458,16 @@ namespace Samurai_CMS.Controllers
         }
 
         #region Helpers
+
+        private UserRole GetDefaultUserRole()
+        {
+            return _dbContext.UserRoles.First();
+        }
+
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {

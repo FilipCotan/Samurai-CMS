@@ -215,10 +215,6 @@
     <Compile Include="Migrations\201704051133206_InitialCreate.Designer.cs">
       <DependentUpon>201704051133206_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704202045511_AddUserRolesEntity.cs" />
-    <Compile Include="Migrations\201704202045511_AddUserRolesEntity.Designer.cs">
-      <DependentUpon>201704202045511_AddUserRolesEntity.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201704202103076_AlterProperties.cs" />
     <Compile Include="Migrations\201704202103076_AlterProperties.Designer.cs">
       <DependentUpon>201704202103076_AlterProperties.cs</DependentUpon>
@@ -226,6 +222,14 @@
     <Compile Include="Migrations\201704202103505_PopulateUserRoles.cs" />
     <Compile Include="Migrations\201704202103505_PopulateUserRoles.Designer.cs">
       <DependentUpon>201704202103505_PopulateUserRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704202233335_AddUserRolesEntity.cs" />
+    <Compile Include="Migrations\201704202233335_AddUserRolesEntity.Designer.cs">
+      <DependentUpon>201704202233335_AddUserRolesEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704202234378_SetUserRoleRelationship.cs" />
+    <Compile Include="Migrations\201704202234378_SetUserRoleRelationship.Designer.cs">
+      <DependentUpon>201704202234378_SetUserRoleRelationship.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -310,14 +314,17 @@
     <EmbeddedResource Include="Migrations\201704051133206_InitialCreate.resx">
       <DependentUpon>201704051133206_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704202045511_AddUserRolesEntity.resx">
-      <DependentUpon>201704202045511_AddUserRolesEntity.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704202103076_AlterProperties.resx">
       <DependentUpon>201704202103076_AlterProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704202103505_PopulateUserRoles.resx">
       <DependentUpon>201704202103505_PopulateUserRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704202233335_AddUserRolesEntity.resx">
+      <DependentUpon>201704202233335_AddUserRolesEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704202234378_SetUserRoleRelationship.resx">
+      <DependentUpon>201704202234378_SetUserRoleRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
