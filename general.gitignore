@@ -1,0 +1,7 @@
+*.mdf
+*.ldf
+*.dll
+*.pdb
+*.txt
+*.Cache
+*.resources
