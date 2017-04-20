@@ -1,4 +1,5 @@
 /obj/
+/obj/Debug/
 *.mdf
 *.ldf
 *.dll
