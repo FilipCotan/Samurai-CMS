@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace Samurai_CMS.Models
+namespace Samurai_CMS.ViewModels
 {
     public class IndexViewModel
     {

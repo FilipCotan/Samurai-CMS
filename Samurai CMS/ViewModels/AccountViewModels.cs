@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Samurai_CMS.Models
+namespace Samurai_CMS.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

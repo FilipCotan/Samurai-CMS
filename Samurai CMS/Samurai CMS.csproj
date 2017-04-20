@@ -211,9 +211,28 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Migrations\201704051133206_InitialCreate.cs" />
+    <Compile Include="Migrations\201704051133206_InitialCreate.Designer.cs">
+      <DependentUpon>201704051133206_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704202045511_AddUserRolesEntity.cs" />
+    <Compile Include="Migrations\201704202045511_AddUserRolesEntity.Designer.cs">
+      <DependentUpon>201704202045511_AddUserRolesEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704202103076_AlterProperties.cs" />
+    <Compile Include="Migrations\201704202103076_AlterProperties.Designer.cs">
+      <DependentUpon>201704202103076_AlterProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704202103505_PopulateUserRoles.cs" />
+    <Compile Include="Migrations\201704202103505_PopulateUserRoles.Designer.cs">
+      <DependentUpon>201704202103505_PopulateUserRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="DAL\ApplicationDbContext.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -286,6 +305,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704051133206_InitialCreate.resx">
+      <DependentUpon>201704051133206_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704202045511_AddUserRolesEntity.resx">
+      <DependentUpon>201704202045511_AddUserRolesEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704202103076_AlterProperties.resx">
+      <DependentUpon>201704202103076_AlterProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704202103505_PopulateUserRoles.resx">
+      <DependentUpon>201704202103505_PopulateUserRoles.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

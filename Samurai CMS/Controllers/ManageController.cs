@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Samurai_CMS.Models;
+using Samurai_CMS.ViewModels;
 
 namespace Samurai_CMS.Controllers
 {
