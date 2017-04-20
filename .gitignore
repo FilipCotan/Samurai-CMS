@@ -1,6 +1,6 @@
-/obj/
-/obj/Debug/
-/obj/Debug/*.txt
+Samurai CMS/obj/
+Samurai CMS/obj/Debug/
+Samurai CMS/obj/Debug/*.txt
 *.mdf
 *.ldf
 *.dll
