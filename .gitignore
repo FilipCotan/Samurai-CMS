@@ -8,3 +8,4 @@ Samurai CMS/App_Data/
 *.pdb
 *.Cache
 *.resources
+*.suo
