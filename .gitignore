@@ -1,6 +1,7 @@
 Samurai CMS/obj/
 Samurai CMS/obj/Debug/
 Samurai CMS/obj/Debug/*.txt
+Samurai CMS/App_Data/
 *.mdf
 *.ldf
 *.dll
