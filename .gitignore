@@ -4,6 +4,5 @@
 *.ldf
 *.dll
 *.pdb
-*.txt
 *.Cache
 *.resources
