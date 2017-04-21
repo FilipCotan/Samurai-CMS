@@ -11,6 +11,14 @@ namespace Samurai_CMS.DAL
     {
         public DbSet<UserRole> UserRoles { get; set; }
 
+        public DbSet<Conference> Conferences { get; set; }
+
+        public DbSet<Edition> Editions { get; set; }
+
+        public DbSet<Session> Sessions { get; set; }
+
+        public DbSet<AuthorPaper> AuthorPapers { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
