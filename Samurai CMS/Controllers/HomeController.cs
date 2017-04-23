@@ -10,7 +10,8 @@ namespace Samurai_CMS.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationDbContext _dbContext;
+        //TODO: Move DB logic to the Data Access Layer
+        private readonly ApplicationDbContext _dbContext;
 
         public HomeController()
         {
