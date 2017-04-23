@@ -138,16 +138,12 @@ namespace Samurai_CMS.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -161,7 +157,7 @@ namespace Samurai_CMS.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     Name = model.Name,
-                    Role = GetDefaultUserRole()
+                    WebsiteUrl = model.WebsiteUrl
                 };
 
                 IdentityResult result;
@@ -457,12 +453,7 @@ namespace Samurai_CMS.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
-
-        private UserRole GetDefaultUserRole()
-        {
-            return _dbContext.UserRoles.First();
-        }
+        #region 
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

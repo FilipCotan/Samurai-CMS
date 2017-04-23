@@ -14,7 +14,9 @@ namespace Samurai_CMS.Models
         [MaxLength(20)]
         public string Name { get; set; }
 
-        public int RoleId { get; set; }
+        public string WebsiteUrl { get; set; }
+
+        public int? RoleId { get; set; }
 
         public virtual UserRole Role { get; set; }
 
