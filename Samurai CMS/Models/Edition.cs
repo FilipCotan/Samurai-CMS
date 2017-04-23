@@ -48,5 +48,7 @@ namespace Samurai_CMS.Models
         public virtual Conference Conference { get; set; }
 
         public virtual ICollection<Session> Sessions { get; set; } = new HashSet<Session>();
+
+        public virtual ICollection<Enrollment> Participants { get; set; }  = new HashSet<Enrollment>();
     }
 }

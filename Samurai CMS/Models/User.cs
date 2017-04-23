@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,10 @@ namespace Samurai_CMS.Models
         public int RoleId { get; set; }
 
         public virtual UserRole Role { get; set; }
+
+        public virtual ICollection<Enrollment> Editions { get; set; } = new HashSet<Enrollment>();
+
+        public virtual ICollection<ReviewAssignment> ReviewAssignments { get; set; } = new HashSet<ReviewAssignment>();
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {

@@ -255,10 +255,20 @@
     <Compile Include="Migrations\201704212304319_AddPaperEntityAndSetRelationshipWithSession.Designer.cs">
       <DependentUpon>201704212304319_AddPaperEntityAndSetRelationshipWithSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704221739432_SetUserEditionsRelationship.cs" />
+    <Compile Include="Migrations\201704221739432_SetUserEditionsRelationship.Designer.cs">
+      <DependentUpon>201704221739432_SetUserEditionsRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704231157574_AddReviewAssignemntsAndSetItsRelationships.cs" />
+    <Compile Include="Migrations\201704231157574_AddReviewAssignemntsAndSetItsRelationships.Designer.cs">
+      <DependentUpon>201704231157574_AddReviewAssignemntsAndSetItsRelationships.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorPaper.cs" />
     <Compile Include="Models\Conference.cs" />
     <Compile Include="Models\Edition.cs" />
+    <Compile Include="Models\Enrollment.cs" />
+    <Compile Include="Models\ReviewAssignment.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\User.cs" />
@@ -371,6 +381,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704212304319_AddPaperEntityAndSetRelationshipWithSession.resx">
       <DependentUpon>201704212304319_AddPaperEntityAndSetRelationshipWithSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704221739432_SetUserEditionsRelationship.resx">
+      <DependentUpon>201704221739432_SetUserEditionsRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704231157574_AddReviewAssignemntsAndSetItsRelationships.resx">
+      <DependentUpon>201704231157574_AddReviewAssignemntsAndSetItsRelationships.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
