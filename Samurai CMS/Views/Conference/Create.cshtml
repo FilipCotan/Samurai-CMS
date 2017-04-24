@@ -1,0 +1,19 @@
+﻿@model Samurai_CMS.Models.Conference
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Conference", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.EditorFor(m => m.Name)
+    @Html.EditorFor(m => m.PaperIsRequired)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Create Conference" />
+        </div>
+    </div>
+}
