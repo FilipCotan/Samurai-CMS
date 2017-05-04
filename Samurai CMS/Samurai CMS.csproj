@@ -216,14 +216,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705042115066_Initial.cs" />
-    <Compile Include="Migrations\201705042115066_Initial.Designer.cs">
-      <DependentUpon>201705042115066_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705042120356_MakePaperIsRequiredNonNullable.cs" />
-    <Compile Include="Migrations\201705042120356_MakePaperIsRequiredNonNullable.Designer.cs">
-      <DependentUpon>201705042120356_MakePaperIsRequiredNonNullable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorPaper.cs" />
     <Compile Include="Models\Conference.cs" />
@@ -316,14 +308,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705042115066_Initial.resx">
-      <DependentUpon>201705042115066_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705042120356_MakePaperIsRequiredNonNullable.resx">
-      <DependentUpon>201705042120356_MakePaperIsRequiredNonNullable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
