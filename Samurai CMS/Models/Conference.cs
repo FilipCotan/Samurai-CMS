@@ -16,8 +16,10 @@ namespace Samurai_CMS.Models
         [MaxLength(40)]
         public string Theme { get; set; }
 
-        public bool? PaperIsRequired { get; set; }
+        [Display(Name="Paper is required")]
+        public bool PaperIsRequired { get; set; }
 
+        [Display(Name = "Number of reviewers")]
         public int ReviewersCount { get; set; }
 
         public virtual ICollection<Edition> Editions { get; set; } = new HashSet<Edition>();
