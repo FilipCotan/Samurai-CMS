@@ -1,0 +1,50 @@
+﻿@model Samurai_CMS.Models.Conference
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Conference</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Theme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Theme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaperIsRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaperIsRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewersCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewersCount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
