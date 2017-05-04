@@ -10,19 +10,6 @@ namespace Samurai_CMS.Controllers
 {
     public class HomeController : Controller
     {
-        //TODO: Move DB logic to the Data Access Layer
-        private readonly ApplicationDbContext _dbContext;
-
-        public HomeController()
-        {
-            _dbContext = new ApplicationDbContext();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _dbContext.Dispose();
-        }
-
         public ActionResult Index()
         {
             return View();
