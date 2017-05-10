@@ -42,6 +42,17 @@
             @Html.DisplayFor(model => model.ReviewersCount)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Editions)
+        </dt>
+
+        <dd>
+            @foreach (var edition in Model.Editions)
+            {
+
+                <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id=edition.Id }, null) </text>
+            }
+        </dd>
     </dl>
 </div>
 <p>

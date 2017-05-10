@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Drawing.Imaging;
+using System.Net;
 using System.Web.Mvc;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
@@ -63,7 +64,8 @@ namespace Samurai_CMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Conference conference = _repositories.ConferenceRepository.GetById(id);
+
+            var conference = _repositories.ConferenceRepository.GetById(id);
             if (conference == null)
             {
                 return HttpNotFound();

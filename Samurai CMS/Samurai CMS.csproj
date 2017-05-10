@@ -209,6 +209,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ConferencesController.cs" />
+    <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\Repository.cs" />
@@ -294,6 +295,11 @@
     <Content Include="Views\Conferences\Details.cshtml" />
     <Content Include="Views\Conferences\Edit.cshtml" />
     <Content Include="Views\Conferences\Index.cshtml" />
+    <Content Include="Views\Editions\Create.cshtml" />
+    <Content Include="Views\Editions\Delete.cshtml" />
+    <Content Include="Views\Editions\Details.cshtml" />
+    <Content Include="Views\Editions\Edit.cshtml" />
+    <Content Include="Views\Editions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -327,7 +333,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1948</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1948/</IISUrl>
+          <IISUrl>http://localhost:3000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

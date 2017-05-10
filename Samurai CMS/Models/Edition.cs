@@ -43,6 +43,7 @@ namespace Samurai_CMS.Models
         [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
+        [DisplayName("Conference")]
         public int ConferenceId { get; set; }
 
         public virtual Conference Conference { get; set; }
