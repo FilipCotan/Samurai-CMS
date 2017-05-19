@@ -16,10 +16,6 @@ namespace Samurai_CMS.Models
 
         public string WebsiteUrl { get; set; }
 
-        public int? RoleId { get; set; }
-
-        public virtual UserRole Role { get; set; }
-
         public virtual ICollection<Enrollment> Editions { get; set; } = new HashSet<Enrollment>();
 
         public virtual ICollection<ReviewAssignment> ReviewAssignments { get; set; } = new HashSet<ReviewAssignment>();
@@ -28,7 +24,11 @@ namespace Samurai_CMS.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
+
+            //Set Listener as the default User Role when registering as a new user.
+            //userIdentity.AddClaim(new Claim(ClaimTypes.Role, Role?.Name ?? Models.Role.Listener.ToString())); 
+            //TODO: Add current role to user claim in order to handle unauthorized requests
+
             return userIdentity;
         }
     }

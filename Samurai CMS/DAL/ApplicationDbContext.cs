@@ -9,7 +9,7 @@ namespace Samurai_CMS.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> UserRoles { get; set; }
 
         public DbSet<Conference> Conferences { get; set; }
 

@@ -28,5 +28,10 @@ namespace Samurai_CMS.Controllers
 
             return View();
         }
+
+        public ActionResult NoRights()
+        {
+            return View();
+        }
     }
 }

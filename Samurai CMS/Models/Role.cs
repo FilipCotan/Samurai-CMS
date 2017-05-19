@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Samurai_CMS.Models
 {
-    public class UserRole
+    public class Role
     {
         public int Id { get; set; }
 

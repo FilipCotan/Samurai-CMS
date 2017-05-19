@@ -14,7 +14,7 @@ namespace Samurai_CMS.DAL
         private Repository<ReviewAssignment> _paperReviewRepository;
         private Repository<Session> _sessionRepository;
         private Repository<User> _userRepository;
-        private Repository<UserRole> _roleRepository;
+        private Repository<Role> _roleRepository;
 
         public Repository<AuthorPaper> PaperRepository => _paperRepository ?? (_paperRepository = new Repository<AuthorPaper>(_context));
 
@@ -30,7 +30,7 @@ namespace Samurai_CMS.DAL
 
         public Repository<User> UserRepository => _userRepository ?? (_userRepository = new Repository<User>(_context));
 
-        public Repository<UserRole> RoleRepository => _roleRepository ?? (_roleRepository = new Repository<UserRole>(_context));
+        public Repository<Role> RoleRepository => _roleRepository ?? (_roleRepository = new Repository<Role>(_context));
 
         public void Complete()
         {

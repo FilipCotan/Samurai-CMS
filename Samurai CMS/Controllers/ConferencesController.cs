@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Imaging;
 using System.Net;
 using System.Web.Mvc;
+using Samurai_CMS.CustomHandlers;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
 
