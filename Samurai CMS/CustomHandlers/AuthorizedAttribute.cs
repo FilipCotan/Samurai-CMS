@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.AspNet.Identity;
 using Samurai_CMS.Models;
 
 namespace Samurai_CMS.CustomHandlers
@@ -36,7 +34,7 @@ namespace Samurai_CMS.CustomHandlers
 
             //return false; //Throw request to HandleUnauthorizedRequest
 
-            return httpContext.User.Identity.IsAuthenticated;
+            return Users == httpContext.User.Identity.GetUserName();
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -46,9 +44,7 @@ namespace Samurai_CMS.CustomHandlers
             {
                 base.HandleUnauthorizedRequest(filterContext);
             }
-
-            //user has no rights to access the page
-            if (filterContext.HttpContext.Response.StatusCode == 400)
+            else //user has no rights to access the page
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "NoRights" }));
             }

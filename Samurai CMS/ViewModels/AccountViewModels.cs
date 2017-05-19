@@ -49,9 +49,8 @@ namespace Samurai_CMS.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,7 +64,12 @@ namespace Samurai_CMS.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Username")]
+        [MaxLength(20)]
+        public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Full Name")]
         [MaxLength(20)]
         public string Name { get; set; }
 

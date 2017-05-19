@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Imaging;
 using System.Net;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Samurai_CMS.CustomHandlers;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
@@ -9,12 +10,16 @@ namespace Samurai_CMS.Controllers
 {
     public class ConferencesController : Controller
     {
+        //this has nothing to do with Conference Roles. 
+        private const string AdministratorUserName = "Administrator";
+
         private readonly UnitOfWork _repositories = new UnitOfWork();
 
         // GET: Conferences
         public ActionResult Index()
         {
             var conferences = _repositories.ConferenceRepository.GetAll();
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
 
             return View(conferences);
         }
@@ -36,6 +41,7 @@ namespace Samurai_CMS.Controllers
             return View(conference);
         }
 
+        [Authorized(Users = AdministratorUserName)]
         // GET: Conferences/Create
         public ActionResult Create()
         {
@@ -59,6 +65,7 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Conferences/Edit/5
+        [Authorized(Users = AdministratorUserName)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,6 +99,7 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Conferences/Delete/5
+        [Authorized(Users = AdministratorUserName)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
