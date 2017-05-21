@@ -53,3 +53,8 @@ textarea {
 .conference-animated-box:hover::after {
     opacity: 1;
 }
+
+/*body padding, to leave space for the navbar*/
+body {
+    padding-top: 80px
+}
