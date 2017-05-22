@@ -154,8 +154,7 @@ namespace Samurai_CMS.Controllers
                 return View(model);
             }
 
-            var user = new User
-            {
+            var user = new User {
                 UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
@@ -185,14 +184,15 @@ namespace Samurai_CMS.Controllers
 
             if (result.Succeeded)
             {
-                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                Services.EmailService service = new Services.EmailService (Services.SamuraiEmail.AccountName, Services.SamuraiEmail.AccountPassword, "Samurai CMS" );
+               
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await service.sendEmailAsync(model.Email,model.Name,"Samurai Cms Account Validation","To validate your account, follow the link below:"+Environment.NewLine+ callbackUrl );
                 return RedirectToAction("Index", "Home");
             }
             AddErrors(result);
