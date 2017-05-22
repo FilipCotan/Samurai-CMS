@@ -56,6 +56,12 @@ namespace Samurai_CMS.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public ActionResult Information()
+        {
+            return View(string.Empty);
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -77,6 +83,19 @@ namespace Samurai_CMS.Controllers
                 return View(model);
             }
 
+            //Check if user has confirmed his account
+            var user = await UserManager.FindByNameAsync(model.Username);
+
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    const string errorMessage = "You must have a confirmed email to log on. Please check your email.";
+
+                    return View("Information", null, errorMessage);
+                }
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
@@ -87,7 +106,7 @@ namespace Samurai_CMS.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -154,7 +173,8 @@ namespace Samurai_CMS.Controllers
                 return View(model);
             }
 
-            var user = new User {
+            var user = new User
+            {
                 UserName = model.UserName,
                 Email = model.Email,
                 Name = model.Name,
@@ -185,15 +205,19 @@ namespace Samurai_CMS.Controllers
             if (result.Succeeded)
             {
                 //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                Services.EmailService service = new Services.EmailService (Services.SamuraiEmail.AccountName, Services.SamuraiEmail.AccountPassword, "Samurai CMS" );
+                var emailService = new Services.EmailService();
                
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                await service.sendEmailAsync(model.Email,model.Name,"Samurai Cms Account Validation","To validate your account, follow the link below:"+Environment.NewLine+ callbackUrl );
-                return RedirectToAction("Index", "Home");
+                if (Request.Url != null)
+                {
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
+                    await emailService.SendEmailAsync(model.Email, model.Name, "Samurai CMS Account Validation","Please validate your account by following the link below:" + Environment.NewLine+ callbackUrl);
+                }
+
+                const string validationEmailSentMessage = "Check your email and confirm your account before you can log in.";
+
+                return View("Information", null, validationEmailSentMessage);
             }
             AddErrors(result);
 
@@ -238,7 +262,6 @@ namespace Samurai_CMS.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		

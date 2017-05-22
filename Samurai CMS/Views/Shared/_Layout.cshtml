@@ -20,11 +20,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href='@Url.Action("Index", "Home")'><img src="~/Content/ImageResources/logo.png"/></a>
-                @*@Html.ActionLink("Samurai CMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                     <li>@Html.ActionLink("Conferences", "Index", "Conferences")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

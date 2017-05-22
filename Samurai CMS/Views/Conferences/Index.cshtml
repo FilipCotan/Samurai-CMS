@@ -14,39 +14,39 @@
 }
 
 <div class="container-fluid">
-    @foreach (var item in Model)
+    @foreach (var conference in Model)
     {
-            <div class="col-sm-6 col-md-4 col-lg-4">
-                <div class="panel panel-default conference-animated-box">
-                    <div class="panel-heading">
-                        @if (ViewBag.IsAdministrator)
-                        {
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <a href='@Url.Action("Details", "Conferences", new {id = item.Id})' title="Details"><strong class="">@Html.DisplayFor(modelItem => item.Name)</strong></a>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href='@Url.Action("Edit", "Conferences", new {id = item.Id})' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <text> &nbsp; &nbsp; </text>
-                                    <a href='@Url.Action("Delete", "Conferences", new {id = item.Id})' title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
-                                </div>
+        <div class="col-sm-6 col-md-4 col-lg-4">
+            <div class="panel panel-default conference-animated-box">
+                <div class="panel-heading">
+                    @if (ViewBag.IsAdministrator)
+                    {
+                        <div class="row">
+                            <div class="col-md-8">
+                                <a href='@Url.Action("Details", "Conferences", new {id = conference.Id})' title="Details"><strong class="">@Html.DisplayFor(modelItem => conference.Name)</strong></a>
                             </div>
-                        }
-                        else
-                        {
-                            <a href='@Url.Action("Details", "Conferences", new {id = item.Id})' title="Details"><strong class="">@Html.DisplayFor(modelItem => item.Name)</strong></a>
-                        }
-                    </div>
-                    <div class="panel-body">
-                        <p>Theme: @Html.DisplayFor(modelItem => item.Theme)</p>
-                        <p>~~ Conference description ~~
-                            ~~ Conference description ~~
-                            ~~ Conference description ~~
-                            ~~ Conference description ~~
-                            ~~ Conference description ~~</p>
-                    </div>
+                            <div class="col-md-4">
+                                <a href='@Url.Action("Edit", "Conferences", new {id = conference.Id})' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                <span>&nbsp; &nbsp;</span>
+                                <a href='@Url.Action("Delete", "Conferences", new {id = conference.Id})' title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href='@Url.Action("Details", "Conferences", new {id = conference.Id})' title="Details"><strong class="">@Html.DisplayFor(modelItem => conference.Name)</strong></a>
+                    }
                 </div>
-            
+                <div class="panel-body">
+                    <p><strong>Theme:</strong> @Html.DisplayFor(modelItem => conference.Theme)</p>
+                    <p>
+                        ~~ Find some text here~~
+                        ~~ Find some text here~~
+                        ~~ Find some text here~~
+                    </p>
+                </div>
+            </div>
+
         </div>
     }
 </div>
