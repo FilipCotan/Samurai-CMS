@@ -338,3 +338,12 @@ window.matchMedia = window.matchMedia || (function(doc, undefined){
 		win.attachEvent( "onresize", callMedia );
 	}
 })(this);
+
+
+//bring hovered conference-animated-box class to front
+$('.conference-animated-box').hover(function () {
+    // set ohter elements to the initial level
+    $(this).siblings('.conference-animated-box').css('z-index', -1);
+    // set hovered element to a higher level
+    $(this).css('z-index', 1);
+});
