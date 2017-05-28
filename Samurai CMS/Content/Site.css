@@ -54,7 +54,11 @@ textarea {
     opacity: 1;
 }
 
+/*navbar font*/
 .nav {
-     font-size: 1.4em; 
-     margin-top: 18px;
+     font-size: 1.1em; 
+}
+/*top padding of the brand image*/
+.navbar-brand {
+    padding-top: 0px;
 }
