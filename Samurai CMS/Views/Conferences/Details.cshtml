@@ -4,57 +4,78 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Editions</h2>
 
-<div>
-    <h4>Conference</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Theme)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Theme)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperIsRequired)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaperIsRequired)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReviewersCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReviewersCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Editions)
-        </dt>
-
-        <dd>
-            @foreach (var edition in Model.Editions)
-            {
-
-                <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id=edition.Id }, null) </text>
-            }
-        </dd>
-    </dl>
+@*This is bad, because I use 3 different iterations for the same collection*@
+<br />
+Current Edition
+<hr />
+<div class="container-fluid">
+    @foreach (var edition in Model.Editions)
+    {
+        if (edition.StartDate < DateTime.Today && edition.EndDate > DateTime.Today)
+        {
+            <div class="col-sm-6 col-md-6 col-lg-6 container">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                    </div>
+                    <div class="panel-body">
+                        <p>@Html.DisplayFor(modelItem => edition.Description)</p>
+                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
+
+<br />
+Upcoming Editions
+<hr />
+<div class="container-fluid">
+    @foreach (var edition in Model.Editions)
+    {
+        if (edition.StartDate > DateTime.Today)
+        {
+            <div class="col-sm-6 col-md-6 col-lg-6 container">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                    </div>
+                    <div class="panel-body">
+                        <p>@Html.DisplayFor(modelItem => edition.Description)</p>
+                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<br />
+Past Editions
+<hr />
+<div class="container-fluid">
+    @foreach (var edition in Model.Editions)
+    {
+        if (edition.EndDate< DateTime.Today)
+        {
+            <div class="col-sm-6 col-md-6 col-lg-6 container">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                    </div>
+                    <div class="panel-body">
+                        <p>@Html.DisplayFor(modelItem => edition.Description)</p>
+                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+    
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

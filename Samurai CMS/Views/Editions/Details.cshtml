@@ -4,87 +4,73 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h4>@Html.DisplayFor(model => model.Conference.Name)</h4>
+<h1 class="text-capitalize text-center">@Html.DisplayFor(model => model.Title)</h1>
+<br />
 
-<div>
-    <h4>Edition</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Conference.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Conference.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AbstractDeadline)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AbstractDeadline)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperDeadline)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaperDeadline)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ResultsDeadline)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ResultsDeadline)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-    </dl>
+<div class="container-fluid">
+    <div class="col-sm-8 col-md-8 col-lg-8"></div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StartDate) @Html.DisplayFor(model => model.Year)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EndDate) @Html.DisplayFor(model => model.Year)
+            </dd>
+        </dl>
+    </div>
 </div>
+
+@if (Model.EndDate > DateTime.Today && Model.StartDate > DateTime.Today)
+{
+    <div class="text-center">
+        <button type="button" class="btn btn-success btn-lg">Apply to attend</button>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+        <p>Enrollment period has ended</p>
+    </div>
+}
+
+<br />
+<div>
+    <h3 class="text-center">@Html.DisplayFor(model => model.Description)</h3>
+</div>
+
+<div class="container-fluid">
+    @foreach (var author in Model.Participants)
+    {
+        if (author.Role.Name == "Author")
+        {
+            <div class="col-sm-3 col-md-3 col-lg-3 text-center">
+                @*Picture of the author. link to his website
+                 <a href='@Url.Action("", "")' class="navbar-brand"><img src="author picturre"/></a>
+                @Html.ActionLink(author.Picture, author.User.WebsiteUrl.ToString)*@
+                <br />
+                @Html.DisplayFor(model => author.User.Name)
+                @Html.DisplayFor(model => author.Affiliation)
+                @*si ce mai are autorul*@
+            </div>
+        }
+    }
+</div>
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to conference details", "Details", "Conferences", new { id = Model.ConferenceId }, null)
+    @Html.ActionLink("Back to conference editions", "Details", "Conferences", new { id = Model.ConferenceId }, null)
 </p>

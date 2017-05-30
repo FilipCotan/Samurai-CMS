@@ -58,7 +58,21 @@ textarea {
 .nav {
      font-size: 1.1em; 
 }
+
 /*top padding of the brand image*/
 .navbar-brand {
     padding-top: 0px;
+}
+
+/*nimimum width of the panel body*/
+.panel-body-width {
+    min-width:300px;
+}
+
+/*align modal to the center*/
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
 }
