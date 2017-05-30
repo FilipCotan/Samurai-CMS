@@ -8,11 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
+using Samurai_CMS.CustomHandlers;
 
 namespace Samurai_CMS.Controllers
 {
     public class EditionsController : Controller
     {
+        //this has nothing to do with Conference Roles. 
+        private const string AdministratorUserName = "Administrator";
+
         private readonly UnitOfWork _repositories = new UnitOfWork();
 
         // GET: Editions
@@ -41,6 +45,7 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Editions/Create
+        [Authorized(Users = AdministratorUserName)]
         public ActionResult Create()
         {
             ViewBag.ConferenceId = new SelectList(_repositories.ConferenceRepository.GetAll(), "Id", "Name");
@@ -67,6 +72,7 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Editions/Edit/5
+        [Authorized(Users = AdministratorUserName)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,6 +109,7 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Editions/Delete/5
+        [Authorized(Users = AdministratorUserName)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
