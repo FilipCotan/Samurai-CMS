@@ -8,12 +8,10 @@
 
 @if (ViewBag.IsAdministrator)
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @Html.ActionLink("Create New", "Create", "Editions", null, new { @class = "btn btn-success btn-outline-success align-middle" });
+    <br /><br />
 }
 
-@*This is bad, because I use 3 different iterations for the same collection*@
 <br />
 Current Edition
 <hr />
@@ -28,8 +26,23 @@ Current Edition
                         <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                     </div>
                     <div class="panel-body">
+                        @{
+                            string startMonth = edition.StartDate.Value.ToString("MMM");
+                            string endMonth = edition.EndDate.Value.ToString("MMM");
+                            string startDay = edition.StartDate.Value.ToString("dd");
+                            string endDay = edition.EndDate.Value.ToString("dd");
+                            string startDayMonth = edition.StartDate.Value.ToString("dd MMM");
+                            string endDayMonth = edition.EndDate.Value.ToString("dd MMM");
+                        }
                         <p>@Html.DisplayFor(modelItem => edition.Description)</p>
-                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        @if (startMonth == endMonth)
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDay) - @Html.DisplayFor(modelItem => endDay) @Html.DisplayFor(modelItem => startMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDayMonth) - @Html.DisplayFor(modelItem => endDayMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -51,8 +64,23 @@ Upcoming Editions
                         <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                     </div>
                     <div class="panel-body">
+                        @{ 
+                            string startMonth = edition.StartDate.Value.ToString("MMM");
+                            string endMonth = edition.EndDate.Value.ToString("MMM");
+                            string startDay = edition.StartDate.Value.ToString("dd");
+                            string endDay = edition.EndDate.Value.ToString("dd");
+                            string startDayMonth = edition.StartDate.Value.ToString("ddMMM");
+                            string endDayMonth = edition.EndDate.Value.ToString("ddMMM");
+                        }
                         <p>@Html.DisplayFor(modelItem => edition.Description)</p>
-                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        @if (startMonth == endMonth)
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDay) - @Html.DisplayFor(modelItem => endDay) @Html.DisplayFor(modelItem => startMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDayMonth) - @Html.DisplayFor(modelItem => endDayMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -74,8 +102,23 @@ Past Editions
                         <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                     </div>
                     <div class="panel-body">
+                        @{
+                            string startMonth = edition.StartDate.Value.ToString("MMM");
+                            string endMonth = edition.EndDate.Value.ToString("MMM");
+                            string startDay = edition.StartDate.Value.ToString("dd");
+                            string endDay = edition.EndDate.Value.ToString("dd");
+                            string startDayMonth = edition.StartDate.Value.ToString("ddMMM");
+                            string endDayMonth = edition.EndDate.Value.ToString("ddMMM");
+                        }
                         <p>@Html.DisplayFor(modelItem => edition.Description)</p>
-                        <p>@Html.DisplayFor(modelItem => edition.StartDate) - @Html.DisplayFor(modelItem => edition.EndDate) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        @if (startMonth == endMonth)
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDay) - @Html.DisplayFor(modelItem => endDay) @Html.DisplayFor(modelItem => startMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDayMonth) - @Html.DisplayFor(modelItem => endDayMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
                     </div>
                 </div>
             </div>

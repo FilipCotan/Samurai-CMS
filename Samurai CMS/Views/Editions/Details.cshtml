@@ -16,7 +16,10 @@
                 @Html.DisplayNameFor(model => model.StartDate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.StartDate) @Html.DisplayFor(model => model.Year)
+                @{
+                    string startDayMonth = Model.StartDate.Value.ToString("dd-MMM");
+                }
+                @Html.DisplayFor(model => startDayMonth) @Html.DisplayFor(model => model.Year)
             </dd>
         </dl>
     </div>
@@ -26,7 +29,10 @@
                 @Html.DisplayNameFor(model => model.EndDate)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.EndDate) @Html.DisplayFor(model => model.Year)
+                @{ 
+                    string endDayMonth = Model.EndDate.Value.ToString("dd-MMM");
+                }
+                @Html.DisplayFor(model => endDayMonth) @Html.DisplayFor(model => model.Year)
             </dd>
         </dl>
     </div>
