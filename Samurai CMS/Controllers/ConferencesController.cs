@@ -81,7 +81,7 @@ namespace Samurai_CMS.Controllers
                 return HttpNotFound();
             }
 
-            return View(conference);
+            return PartialView(conference);
         }
 
         // POST: Conferences/Edit/5
@@ -114,7 +114,7 @@ namespace Samurai_CMS.Controllers
             {
                 return HttpNotFound();
             }
-            return View(conference);
+            return PartialView(conference);
         }
 
         // POST: Conferences/Delete/5

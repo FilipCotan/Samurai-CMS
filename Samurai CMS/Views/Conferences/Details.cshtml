@@ -9,6 +9,8 @@
 @if (ViewBag.IsAdministrator)
 {
     @Html.ActionLink("Create New", "Create", "Editions", null, new { @class = "btn btn-success btn-outline-success align-middle" });
+    <text>&nbsp;&nbsp;&nbsp;</text>
+    @Html.ActionLink("All Editions", "Index", "Editions", null, new { @class = "btn btn-success btn-outline-success" });
     <br /><br />
 }
 
@@ -16,6 +18,7 @@
 Current Edition
 <hr />
 <div class="container-fluid">
+    @{ int index = 0;}
     @foreach (var edition in Model.Editions)
     {
         if (edition.StartDate < DateTime.Today && edition.EndDate > DateTime.Today)
@@ -23,7 +26,19 @@ Current Edition
             <div class="col-sm-6 col-md-6 col-lg-6 container">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                            </div>
+                            @if (ViewBag.IsAdministrator)
+                            {
+                                <div class="col-md-2">
+                                    <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <span>&nbsp; &nbsp;</span>
+                                    <a data-toggle="modal" href="#@("delete-modal-"+index)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div class="panel-body">
                         @{
@@ -45,7 +60,21 @@ Current Edition
                         }
                     </div>
                 </div>
+
+                @if (ViewBag.IsAdministrator)
+                {
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                @Html.Partial("~/Views/Editions/Delete.cshtml", edition);
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
+            index++;
         }
     }
 </div>
@@ -61,45 +90,19 @@ Upcoming Editions
             <div class="col-sm-6 col-md-6 col-lg-6 container">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
-                    </div>
-                    <div class="panel-body">
-                        @{ 
-                            string startMonth = edition.StartDate.Value.ToString("MMM");
-                            string endMonth = edition.EndDate.Value.ToString("MMM");
-                            string startDay = edition.StartDate.Value.ToString("dd");
-                            string endDay = edition.EndDate.Value.ToString("dd");
-                            string startDayMonth = edition.StartDate.Value.ToString("ddMMM");
-                            string endDayMonth = edition.EndDate.Value.ToString("ddMMM");
-                        }
-                        <p>@Html.DisplayFor(modelItem => edition.Description)</p>
-                        @if (startMonth == endMonth)
-                        {
-                            <p>@Html.DisplayFor(modelItem => startDay) - @Html.DisplayFor(modelItem => endDay) @Html.DisplayFor(modelItem => startMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
-                        }
-                        else
-                        {
-                            <p>@Html.DisplayFor(modelItem => startDayMonth) - @Html.DisplayFor(modelItem => endDayMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
-
-<br />
-Past Editions
-<hr />
-<div class="container-fluid">
-    @foreach (var edition in Model.Editions)
-    {
-        if (edition.EndDate< DateTime.Today)
-        {
-            <div class="col-sm-6 col-md-6 col-lg-6 container">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                            </div>
+                            @if (ViewBag.IsAdministrator)
+                            {
+                                <div class="col-md-2">
+                                    <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <span>&nbsp; &nbsp;</span>
+                                    <a data-toggle="modal" href="#@("delete-modal-" + index)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            }
+                        </div> 
                     </div>
                     <div class="panel-body">
                         @{
@@ -121,12 +124,87 @@ Past Editions
                         }
                     </div>
                 </div>
+                @if (ViewBag.IsAdministrator)
+                {
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                @Html.Partial("~/Views/Editions/Delete.cshtml", edition);
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
+            index++;
         }
     }
 </div>
-    
+
+<br />
+Past Editions
+<hr />
+<div class="container-fluid">
+    @foreach (var edition in Model.Editions)
+    {
+        if (edition.EndDate < DateTime.Today)
+        {
+            <div class="col-sm-6 col-md-6 col-lg-6 container">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
+                            </div>
+                            @if (ViewBag.IsAdministrator)
+                            {
+                                <div class="col-md-2">
+                                    <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <span>&nbsp; &nbsp;</span>
+                                    <a data-toggle="modal" href="#@("delete-modal-" + index)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                </div>
+                            }
+                        </div> 
+                    </div>
+                    <div class="panel-body">
+                        @{
+                            string startMonth = edition.StartDate.Value.ToString("MMM");
+                            string endMonth = edition.EndDate.Value.ToString("MMM");
+                            string startDay = edition.StartDate.Value.ToString("dd");
+                            string endDay = edition.EndDate.Value.ToString("dd");
+                            string startDayMonth = edition.StartDate.Value.ToString("ddMMM");
+                            string endDayMonth = edition.EndDate.Value.ToString("ddMMM");
+                        }
+                        <p>@Html.DisplayFor(modelItem => edition.Description)</p>
+                        @if (startMonth == endMonth)
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDay) - @Html.DisplayFor(modelItem => endDay) @Html.DisplayFor(modelItem => startMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.DisplayFor(modelItem => startDayMonth) - @Html.DisplayFor(modelItem => endDayMonth) @Html.DisplayFor(modelItem => edition.Year)</p>
+                        }
+                    </div>
+                </div>
+                @if (ViewBag.IsAdministrator)
+                {
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                @Html.Partial("~/Views/Editions/Delete.cshtml", edition);
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            index++;
+        }
+    }
+</div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

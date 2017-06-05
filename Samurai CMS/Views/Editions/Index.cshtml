@@ -14,38 +14,40 @@
     <br /><br />
 }
 
-<table class="table">
+<table class="table table-condensed table-hover">
+
     <tr>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.Conference.Name)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
+        <th class="col-xs-3">
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.Year)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.AbstractDeadline)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.PaperDeadline)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.ResultsDeadline)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
-        <th>
+        <th class="col-xs-1">
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <th></th>
+        <th class="col-xs-2"></th>
     </tr>
 
+    @{ int index = 0;}
     @foreach (var item in Model)
     {
         <tr>
@@ -76,14 +78,29 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            <td class="text-center">
+                <a href="@Url.Action("Details", "Editions", new { id = item.Id })"><span class="glyphicon glyphicon-info-sign" style="font-size: 20px"></span></a>
+                <br /><br />
+                <a href="@Url.Action("Edit", "Editions", new { id = item.Id })"><span class="glyphicon glyphicon-edit" style="font-size: 20px"></span></a>
+                <br /><br />
+                <a data-toggle="modal" href="#@("delete-modal-"+index)" title="Delete"><span class="glyphicon glyphicon-trash" style="font-size: 20px"></span></a>
             </td>
         </tr>
+
+        <!-- Delete Modal -->
+            <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        @Html.Partial("~/Views/Editions/Delete.cshtml", item);
+                    </div>
+                </div>
+            </div>
+        index++;
     }
 
 </table>
+
+
 
 @Html.ActionLink("Back to Conferences", "Index", "Conferences")

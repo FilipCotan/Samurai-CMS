@@ -47,14 +47,15 @@
                 </div>
                 <hr />
                 <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                    <div class="row">
+                        <div class="col-md-1">
+                            <input type="submit" value="Log in" class="btn btn-default" />
+                        </div>
+                        <div class="col-md-2">
+                            @Html.ActionLink("Register as a new user", "Register", null, new { @class = "btn btn-info" })
+                        </div>
                     </div>
                 </div>
-                
-                    <p>
-                        @Html.ActionLink("Register as a new user", "Register")
-                    </p>
                     @* Enable this once you have account confirmation enabled for password reset functionality
                         <p>
                             @Html.ActionLink("Forgot your password?", "ForgotPassword")
