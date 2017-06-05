@@ -17,7 +17,6 @@ namespace Samurai_CMS.Controllers
     {
         //this has nothing to do with Conference Roles. 
         private const string AdministratorUserName = "Administrator";
-
         private readonly UnitOfWork _repositories = new UnitOfWork();
 
         // GET: Editions

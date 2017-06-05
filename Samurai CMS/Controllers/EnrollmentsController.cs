@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
@@ -60,7 +61,14 @@ namespace Samurai_CMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(int? id, EnrollmentViewModel enrollmentViewModel)
         {
-            if (ModelState.IsValid && id != null)
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Conferences");
+            }
+
+            AuthorPaper paper = null;
+
+            if (enrollmentViewModel.IsSpeaker)
             {
                 var abstractFile = new byte[enrollmentViewModel.Abstract.InputStream.Length];
                 enrollmentViewModel.Abstract.InputStream.Read(abstractFile, 0, abstractFile.Length);
@@ -68,7 +76,7 @@ namespace Samurai_CMS.Controllers
                 var paperFile = new byte[enrollmentViewModel.Paper.InputStream.Length];
                 enrollmentViewModel.Paper.InputStream.Read(paperFile, 0, paperFile.Length);
 
-                var paper = new AuthorPaper
+                paper = new AuthorPaper
                 {
                     AbstractFileName = enrollmentViewModel.Abstract.FileName,
                     Abstract = abstractFile,
@@ -78,25 +86,27 @@ namespace Samurai_CMS.Controllers
                     Keywords = enrollmentViewModel.Keywords
                 };
 
-                _repositories.PaperRepository.Insert(paper);
-
-                var enrollment = new Enrollment
-                {
-                    UserId = User.Identity.GetUserId(),
-                    EditionId = id.Value,
-                    PaperId = paper.Id,
-                    Affiliation = enrollmentViewModel.Affiliation
-                };
-
-                _repositories.EnrollmentRepository.Insert(enrollment);
-                _repositories.Complete();
-
-                return RedirectToAction("Index");
+                _repositories.PaperRepository.Insert(paper); 
             }
 
-            ViewBag.RoleId = new SelectList(_repositories.RoleRepository.GetAll(), "Id", "Name");
+            var roles = _repositories.RoleRepository.GetAll();
+            var enumerableList = roles as IList<Role> ?? roles.ToList();
+            int authorRoleId = enumerableList.First(r => r.Name == Roles.Author.ToString()).Id;
+            int listenerRoleId = enumerableList.First(r => r.Name == Roles.Listener.ToString()).Id;
 
-            return RedirectToAction("Index", "Conferences");
+            var enrollment = new Enrollment
+            {
+                UserId = User.Identity.GetUserId(),
+                EditionId = id.Value,
+                PaperId = paper?.Id,
+                RoleId = enrollmentViewModel.IsSpeaker ? authorRoleId : listenerRoleId,
+                Affiliation = enrollmentViewModel.Affiliation
+            };
+
+            _repositories.EnrollmentRepository.Insert(enrollment);
+            _repositories.Complete();
+
+            return RedirectToAction("Details", "Editions", new { id = id });
         }
 
         // GET: Enrollments/Edit/5

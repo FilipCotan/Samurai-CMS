@@ -6,14 +6,25 @@
 
 <h2>Enrollment for <i>@ViewBag.EditionTitle</i></h2>
 
+<br/>
 
-@using (Html.BeginForm("Create", "Enrollments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<div>
+    <h4 style="float: left;">Enroll as a speaker:</h4>&nbsp;&nbsp;&nbsp;
+    <label class="switch">
+        <input id="is-speaker" type="checkbox">
+        <span class="slider round"></span>
+    </label>
+</div>
+
+@using (Html.BeginForm("Create", "Enrollments", FormMethod.Post, new { enctype = "multipart/form-data", id = "enroll-form" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.IsSpeaker, new { id = "is-speaker-hidden" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -65,16 +76,74 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Continue..." class="btn btn-default" />
+                @*<input type="submit" value="Continue..." class="btn btn-default"/>*@
+                <button type="submit" class="btn btn-success pay-button"><span class="glyphicon glyphicon-eur"></span>&nbsp;&nbsp; Continue...</button>
             </div>
         </div>
     </div>
 }
 
+<br />
+<button type="button" class="btn btn-success pay-button listener"><span class="glyphicon glyphicon-eur"></span>&nbsp;&nbsp; Continue...</button>
+
+<br/>
+<br/>
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Edition", "Details", "Editions", new {id = Url.RequestContext.RouteData.Values["id"]})
 </div>
 
+<!-- Payment Modal -->
+<div class="modal fade" id="payment-modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>Price: 32 <span class="glyphicon glyphicon-eur small"></span></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="payment-complete" class="btn btn-success" data-dismiss="modal" action=""><span class="glyphicon glyphicon-eur"></span>&nbsp;&nbsp;&nbsp; Pay</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<a data-toggle="modal" id="open-payment-modal" href="#payment-modal"></a>
+
 @section Scripts {
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section CustomScripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#enroll-form").hide();
+
+            $("#is-speaker").click(function() {
+                $("#enroll-form").toggle();
+                $(".listener").toggle();
+                $("#is-speaker-hidden").val($("#is-speaker").is(":checked"));
+            });
+
+            $(".pay-button").click(function(event) {
+                var isValid = $("#enroll-form").valid();
+                var isSpeaker = $("#is-speaker").is(":checked");
+
+                if (isValid == true || isSpeaker == false) {
+                    $("#open-payment-modal")[0].click();
+                }
+
+                event.preventDefault();
+
+                return false;
+            });
+
+            $("#payment-complete").click(function() {
+                $("#enroll-form").submit();
+            });
+        });
+    </script>
 }

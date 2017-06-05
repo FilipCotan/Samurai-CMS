@@ -32,6 +32,8 @@ namespace Samurai_CMS.ViewModels
         [Required]
         public string Affiliation { get; set; }
 
+        public bool IsSpeaker { get; set; }
+
         public virtual Session Session { get; set; }
     }
 }
