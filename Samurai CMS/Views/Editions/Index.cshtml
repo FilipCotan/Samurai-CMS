@@ -45,7 +45,7 @@
         </th>
         <th></th>
     </tr>
-
+    @{ int index = 0;}
     @foreach (var item in Model)
     {
         <tr>
@@ -77,11 +77,22 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <a href="@Url.Action("Details", "Editions", new { id = item.Id })"><span class="glyphicon glyphicon-info-sign"></span></a> |
+                <a href="@Url.Action("Edit", "Editions", new { id = item.Id })"><span class="glyphicon glyphicon-edit"></span></a> |
+                <a data-toggle="modal" href="#@("delete-modal-"+index)" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
             </td>
         </tr>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    @Html.Partial("~/Views/Editions/Delete.cshtml", item);
+                </div>
+            </div>
+        </div>
+        index++;
     }
 
 </table>

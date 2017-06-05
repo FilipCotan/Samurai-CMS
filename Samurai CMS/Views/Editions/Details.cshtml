@@ -77,6 +77,10 @@ else
 
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @if (ViewBag.IsAdministrator)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }); 
+        <text> | </text>
+    }
     @Html.ActionLink("Back to conference editions", "Details", "Conferences", new { id = Model.ConferenceId }, null)
 </p>

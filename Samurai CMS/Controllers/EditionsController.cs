@@ -33,6 +33,8 @@ namespace Samurai_CMS.Controllers
         // GET: Editions/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -125,7 +127,7 @@ namespace Samurai_CMS.Controllers
             {
                 return HttpNotFound();
             }
-            return View(edition);
+            return PartialView(edition);
         }
 
         // POST: Editions/Delete/5
