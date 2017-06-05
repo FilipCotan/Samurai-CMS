@@ -44,6 +44,10 @@ namespace Samurai_CMS.Controllers
                 return HttpNotFound();
             }
 
+            string loggedUserId = User.Identity.GetUserId();
+
+            ViewBag.AlreadyAttended = _repositories.EnrollmentRepository.GetAll(e => e.UserId == loggedUserId && e.EditionId == id).Any();
+
             return View(edition);
         }
 
