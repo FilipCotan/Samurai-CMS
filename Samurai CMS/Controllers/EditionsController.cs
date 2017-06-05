@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
 using Samurai_CMS.CustomHandlers;
+using Microsoft.AspNet.Identity;
 
 namespace Samurai_CMS.Controllers
 {
@@ -22,6 +23,8 @@ namespace Samurai_CMS.Controllers
         // GET: Editions
         public ActionResult Index()
         {
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
+
             var editions = _repositories.EditionRepository.GetAll(includeProperties: "Conference");
 
             return View(editions.ToList());
