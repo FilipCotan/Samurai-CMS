@@ -1,0 +1,58 @@
+﻿@model Samurai_CMS.Models.Enrollment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Enrollment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Edition.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edition.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Paper.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Paper.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Role.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Affiliation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Affiliation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

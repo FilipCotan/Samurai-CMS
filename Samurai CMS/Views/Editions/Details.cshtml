@@ -41,7 +41,7 @@
 @if (Model.EndDate > DateTime.Today && Model.StartDate > DateTime.Today)
 {
     <div class="text-center">
-        <button type="button" class="btn btn-success btn-lg">Apply to attend</button>
+        <button type="button" class="btn btn-success btn-lg">@Html.ActionLink("Apply to attend", "Create", "Enrollments", new { id = Model.Id }, null)  </button>
     </div>
 }
 else
