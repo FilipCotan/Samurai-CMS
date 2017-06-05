@@ -28,5 +28,7 @@ namespace Samurai_CMS.DAL
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Samurai_CMS.Models.Enrollment> Enrollments { get; set; }
     }
 }

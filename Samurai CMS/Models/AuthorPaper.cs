@@ -17,15 +17,15 @@ namespace Samurai_CMS.Models
 
         public bool? IsAccepted { get; set; }
 
-        public string AbstractFileType { get; set; }
+        public string AbstractFileName { get; set; }
 
         public byte[] Abstract { get; set; }
 
-        public string PaperFileType { get; set; }
+        public string PaperFileName { get; set; }
 
         public byte[] Paper { get; set; }
 
-        public int SessionId { get; set; }
+        public int? SessionId { get; set; }
 
         public virtual Session Session { get; set; }
 
