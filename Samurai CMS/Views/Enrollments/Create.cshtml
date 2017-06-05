@@ -49,16 +49,16 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Abstract, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Abstract, new { htmlAttributes = new { @class = "file" }, type = "file" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Abstract, new { @class = "filestyle", type = "file" })
                 @Html.ValidationMessageFor(model => model.Abstract, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Paper, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Paper, new { @class = "file", type = "file" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Paper, new { @class = "filestyle", type = "file" })
                 @Html.ValidationMessageFor(model => model.Paper, "", new { @class = "text-danger" })
             </div>
         </div>
