@@ -7,8 +7,12 @@ using Samurai_CMS.Models;
 
 namespace Samurai_CMS.ViewModels
 {
-    public class EnrollmentViewModel
+    public class UpdateEnrollmentViewModel
     {
+        public int EditionId { get; set; }
+
+        public int? PaperId { get; set; }
+
         [Required]
         public string Title { get; set; }
 
@@ -18,22 +22,8 @@ namespace Samurai_CMS.ViewModels
         [Required]
         public string Keywords { get; set; }
 
-        public bool? IsAccepted { get; set; }
-
-        [Required]
         public HttpPostedFileBase Abstract { get; set; }
 
         public HttpPostedFileBase Paper { get; set; }
-
-        public int SessionId { get; set; }
-
-        [Required]
-        public string Affiliation { get; set; }
-
-        public bool IsSpeaker { get; set; }
-
-        public int EditionId { get; set; }
-
-        public virtual Session Session { get; set; }
     }
 }

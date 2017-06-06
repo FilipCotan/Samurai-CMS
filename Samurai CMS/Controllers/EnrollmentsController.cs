@@ -9,17 +9,20 @@ using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.AspNet.Identity;
+using Samurai_CMS.CustomHandlers;
 using Samurai_CMS.DAL;
 using Samurai_CMS.Models;
 using Samurai_CMS.ViewModels;
 
 namespace Samurai_CMS.Controllers
 {
+    [Authorize]
     public class EnrollmentsController : Controller
     {
         private readonly UnitOfWork _repositories = new UnitOfWork();
 
         // GET: Enrollments
+        [Authorized(Users = "Administrator")]
         public ActionResult Index()
         {
             var enrollments = _repositories.EnrollmentRepository.GetAll(includeProperties: "Edition,Paper,Role,User");
@@ -111,29 +114,105 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Enrollments/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string userId, int? editionId)
         {
-            if (id == null)
+            if (userId == null || editionId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var enrollment = _repositories.EnrollmentRepository.GetById(id);
+
+            bool isAdministrator = User.Identity.GetUserName() == Roles.Administrator.ToString();
+
+            if (!isAdministrator && User.Identity.GetUserId() != userId)
+            {
+                return RedirectToAction("NoRights", "Home");
+            }
+
+            if (isAdministrator)
+            {
+                return RedirectToAction("EditAdministrator", new { userId, editionId });
+            }
+
+            var enrollment = _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == editionId).FirstOrDefault();
             if (enrollment == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EditionId = new SelectList(_repositories.EditionRepository.GetAll(), "Id", "Title");
-            ViewBag.PaperId = new SelectList(_repositories.PaperRepository.GetAll(), "Id", "Title");
+
+            var enrollmentViewModel = new UpdateEnrollmentViewModel
+            {
+                Title = enrollment.Paper.Title, 
+                Authors = enrollment.Paper.Authors,
+                Keywords = enrollment.Paper.Keywords,
+                EditionId = enrollment.EditionId,
+                PaperId = enrollment.PaperId
+            };
+
+            return View(enrollmentViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(UpdateEnrollmentViewModel enrollmentViewModel)
+        {
+            var paper = _repositories.PaperRepository.GetAll(p => p.Id == enrollmentViewModel.PaperId).First();
+            paper.Title = enrollmentViewModel.Title;
+            paper.Authors = enrollmentViewModel.Authors;
+            paper.Keywords = enrollmentViewModel.Keywords;
+
+            if (enrollmentViewModel.Abstract != null)
+            {
+                var abstractFile = new byte[enrollmentViewModel.Abstract.InputStream.Length];
+                enrollmentViewModel.Abstract.InputStream.Read(abstractFile, 0, abstractFile.Length);
+
+                paper.Abstract = abstractFile;
+                paper.AbstractFileName = enrollmentViewModel.Abstract.FileName;
+            }
+
+            if (enrollmentViewModel.Paper != null)
+            {
+                var paperFile = new byte[enrollmentViewModel.Paper.InputStream.Length];
+                enrollmentViewModel.Paper.InputStream.Read(paperFile, 0, paperFile.Length);
+
+                paper.Paper = paperFile;
+                paper.PaperFileName = enrollmentViewModel.Paper.FileName;
+            }
+
+            _repositories.PaperRepository.Update(paper);
+
+            string userId = User.Identity.GetUserId();
+
+            var enrollment = _repositories.EnrollmentRepository.GetAll(e => e.PaperId == paper.Id && e.UserId == userId).First();
+            enrollment.Paper = paper;
+            _repositories.EnrollmentRepository.Update(enrollment);
+            _repositories.Complete();
+
+            return RedirectToAction("Details", "Editions", new { id = enrollmentViewModel.EditionId });
+        }
+
+        // GET: Enrollments/EditAdministrator/5
+        public ActionResult EditAdministrator(string userId, int? editionId)
+        {
+            if (userId == null || editionId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var enrollment = _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == editionId).FirstOrDefault();
+            if (enrollment == null)
+            {
+                return HttpNotFound();
+            }
+
             ViewBag.RoleId = new SelectList(_repositories.RoleRepository.GetAll(), "Id", "Name");
-            ViewBag.UserId = new SelectList(_repositories.UserRepository.GetAll(), "Id", "Name");
 
             return View(enrollment);
         }
 
-        // POST: Enrollments/Edit/5
+        // POST: Enrollments/EditAdministrator/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,EditionId,RoleId,PaperId,Affiliation")] Enrollment enrollment)
+        public ActionResult EditAdministrator([Bind(Include = "RoleId,UserId,EditionId")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -142,10 +221,7 @@ namespace Samurai_CMS.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.EditionId = new SelectList(_repositories.EditionRepository.GetAll(), "Id", "Title");
-            ViewBag.PaperId = new SelectList(_repositories.PaperRepository.GetAll(), "Id", "Title");
             ViewBag.RoleId = new SelectList(_repositories.RoleRepository.GetAll(), "Id", "Name");
-            ViewBag.UserId = new SelectList(_repositories.UserRepository.GetAll(), "Id", "Name");
 
             return View(enrollment);
         }

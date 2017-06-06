@@ -1,4 +1,5 @@
-﻿@model Samurai_CMS.Models.Edition
+﻿@using Microsoft.AspNet.Identity
+@model Samurai_CMS.Models.Edition
 
 @{
     ViewBag.Title = "Details";
@@ -29,12 +30,10 @@ else
 
 <br />
 
-
-
 @if (Model.EndDate > DateTime.Today && Model.StartDate > DateTime.Today && !ViewBag.AlreadyAttended)
 {
     <div class="text-center">
-        @Html.ActionLink("Apply to attend", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+        @Html.ActionLink("Update", "Edit", "Enrollments", new { userId = User.Identity.GetUserId(), editionId = Model.Id }, new { @class = "btn btn-success btn-lg" })
     </div>
 }
 else if (ViewBag.AlreadyAttended)
@@ -42,7 +41,7 @@ else if (ViewBag.AlreadyAttended)
     if (ViewBag.IsSpeaker)
     {
         <div class="text-center">
-            @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+            @Html.ActionLink("Update", "Edit", "Enrollments", new { userId = User.Identity.GetUserId(), editionId = Model.Id }, new { @class = "btn btn-success btn-lg" })
         </div>
         <div class="text-center">
             <h4 class="text-info">Modify abstract or paper</h4>
@@ -163,7 +162,7 @@ else
             if (ViewBag.IsSpeaker)
             {
                 <div class="text-center">
-                    @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+                    @Html.ActionLink("Update", "Edit", "Enrollments", new { userId = User.Identity.GetUserId(), editionId = Model.Id }, new { @class = "btn btn-success btn-lg" })
                 </div>
                 <div class="text-center">
                     <h4 class="text-info">Modify abstract or paper</h4>
@@ -172,8 +171,7 @@ else
             else
             {
                 <div class="text-center">
-                    <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
-                    <p class="text-danger">You already attended this edition!</p>
+                    <p class="text-danger">You are registered to this edition!</p>
                 </div>
             }
         }
@@ -193,25 +191,23 @@ else
 <h2 class="text-center">The speakers of this edition</h2>
 <br />
 <div class="container-fluid">
-    @foreach (var author in Model.Participants)
+    @foreach (var author in Model.Participants.Where(author => author.Role.Name == Samurai_CMS.Models.Roles.Author.ToString()))
     {
-        if (author.Role.Name == "Author")                   //a se sterge if-ul asta
-        {                                                   //si a se decomenta if-urile de mai jos
+        //si a se decomenta if-urile de mai jos
         //if (author.Role.Name == "Author" && author.Paper.IsAccepted != null)
         //{
         //    if (author.Paper.IsAccepted == true)
         //    {
-            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
-                <a href='http://@author.User.WebsiteUrl' target="_blank"><img class="img-circle img-responsive img-center" src="~/Content/ImageResources/no-photo-speaker.png"/></a>
-                <h4>@Html.DisplayFor(model => author.User.Name)</h4>
-                <p>@Html.DisplayFor(model => author.Affiliation)</p>
-                <br />
-                Paper title:
-                <p>@Html.DisplayFor(model => author.Paper.Title)</p>
-                <br />
-            </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+            <a href='http://@author.User.WebsiteUrl' target="_blank"><img class="img-circle img-responsive img-center" src="~/Content/ImageResources/no-photo-speaker.png"/></a>
+            <h4>@Html.DisplayFor(model => author.User.Name)</h4>
+            <p>@Html.DisplayFor(model => author.Affiliation)</p>
+            <br />
+            Paper title:
+            <p>@Html.DisplayFor(model => author.Paper.Title)</p>
+            <br />
+        </div>
         //    }
-        }
     }
 </div>
 

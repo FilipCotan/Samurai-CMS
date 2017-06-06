@@ -27,13 +27,13 @@ namespace Samurai_CMS.Controllers
         // GET: Conferences/Details/5
         public ActionResult Details(int? id)
         {
-            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
+            ViewBag.IsOrganiser = User.Identity.GetUserName() == AdministratorUserName; ;
+
             Conference conference = _repositories.ConferenceRepository.GetById(id);
             if (conference == null)
             {

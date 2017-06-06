@@ -238,6 +238,7 @@
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\UpdateEnrollmentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ImageResources\no-photo-speaker.png" />
@@ -329,13 +330,14 @@
     <Content Include="Views\Enrollments\Create.cshtml" />
     <Content Include="Views\Enrollments\Delete.cshtml" />
     <Content Include="Views\Enrollments\Details.cshtml" />
-    <Content Include="Views\Enrollments\Edit.cshtml" />
+    <Content Include="Views\Enrollments\EditAdministrator.cshtml" />
     <Content Include="Views\Enrollments\Index.cshtml" />
     <Content Include="Views\Papers\Create.cshtml" />
     <Content Include="Views\Papers\Delete.cshtml" />
     <Content Include="Views\Papers\Details.cshtml" />
     <Content Include="Views\Papers\Edit.cshtml" />
     <Content Include="Views\Papers\Index.cshtml" />
+    <Content Include="Views\Enrollments\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

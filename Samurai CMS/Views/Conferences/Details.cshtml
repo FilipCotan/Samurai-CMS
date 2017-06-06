@@ -6,12 +6,10 @@
 
 <h2>Editions</h2>
 
-@if (ViewBag.IsAdministrator)
+@if (ViewBag.IsOrganiser)
 {
     @Html.ActionLink("Create New", "Create", "Editions", null, new { @class = "btn btn-success btn-outline-success align-middle" });
-    <text>&nbsp;&nbsp;&nbsp;</text>
-    @Html.ActionLink("All Editions", "Index", "Editions", null, new { @class = "btn btn-success btn-outline-success" });
-    <br /><br />
+    <br /><br /><br /><br />
 }
 
 <br />
@@ -30,7 +28,7 @@ Current Edition
                             <div class="col-md-10">
                                 <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                             </div>
-                            @if (ViewBag.IsAdministrator)
+                            @if (ViewBag.IsOrganiser)
                             {
                                 <div class="col-md-2">
                                     <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
@@ -94,7 +92,7 @@ Upcoming Editions
                             <div class="col-md-10">
                                 <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                             </div>
-                            @if (ViewBag.IsAdministrator)
+                            @if (ViewBag.IsOrganiser)
                             {
                                 <div class="col-md-2">
                                     <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
@@ -124,7 +122,7 @@ Upcoming Editions
                         }
                     </div>
                 </div>
-                @if (ViewBag.IsAdministrator)
+                @if (ViewBag.IsOrganiser)
                 {
                     <!-- Delete Modal -->
                     <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">
@@ -157,7 +155,7 @@ Past Editions
                             <div class="col-md-10">
                                 <strong>Title:</strong> <text> @Html.ActionLink(edition.Title, "Details", "Editions", new { id = edition.Id }, null) </text>
                             </div>
-                            @if (ViewBag.IsAdministrator)
+                            @if (ViewBag.IsOrganiser)
                             {
                                 <div class="col-md-2">
                                     <a href='@Url.Action("Edit", "Editions", new { id = edition.Id })' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
@@ -187,7 +185,7 @@ Past Editions
                         }
                     </div>
                 </div>
-                @if (ViewBag.IsAdministrator)
+                @if (ViewBag.IsOrganiser)
                 {
                     <!-- Delete Modal -->
                     <div class="modal fade" id="@("delete-modal-" + index)" role="dialog">

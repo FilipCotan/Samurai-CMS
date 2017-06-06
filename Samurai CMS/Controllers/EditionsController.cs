@@ -15,15 +15,14 @@ namespace Samurai_CMS.Controllers
 {
     public class EditionsController : Controller
     {
-        //this has nothing to do with Conference Roles. 
         private const string AdministratorUserName = "Administrator";
         private readonly UnitOfWork _repositories = new UnitOfWork();
 
         // GET: Editions
+        [Authorize]
         public ActionResult Index()
         {
-            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
-
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == Roles.Administrator.ToString();
             var editions = _repositories.EditionRepository.GetAll(includeProperties: "Conference");
 
             return View(editions.ToList());
@@ -32,7 +31,7 @@ namespace Samurai_CMS.Controllers
         // GET: Editions/Details/5
         public ActionResult Details(int? id)
         {
-            ViewBag.IsAdministrator = User.Identity.GetUserName() == AdministratorUserName;
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == Roles.Administrator.ToString();
 
             if (id == null)
             {
@@ -46,7 +45,6 @@ namespace Samurai_CMS.Controllers
             }
 
             string loggedUserId = User.Identity.GetUserId();
-
             ViewBag.AlreadyAttended = _repositories.EnrollmentRepository.GetAll(e => e.UserId == loggedUserId && e.EditionId == id).Any();
 
             string userId = User.Identity.GetUserId();
@@ -56,7 +54,6 @@ namespace Samurai_CMS.Controllers
         }
 
         // GET: Editions/Create
-        [Authorized(Users = AdministratorUserName)]
         public ActionResult Create()
         {
             ViewBag.ConferenceId = new SelectList(_repositories.ConferenceRepository.GetAll(), "Id", "Name");
@@ -73,8 +70,8 @@ namespace Samurai_CMS.Controllers
             {
                 _repositories.EditionRepository.Insert(edition);
                 _repositories.Complete();
-               
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Details", "Conferences", new {id = edition.ConferenceId});
             }
 
             ViewBag.ConferenceId = new SelectList(_repositories.ConferenceRepository.GetAll(), "Id", "Name", edition.ConferenceId);

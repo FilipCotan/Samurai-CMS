@@ -11,6 +11,7 @@ using Samurai_CMS.Models;
 
 namespace Samurai_CMS.Controllers
 {
+    [Authorize(Users = "Administrator")]
     public class UsersController : Controller
     {
         private readonly UnitOfWork _repositories = new UnitOfWork();

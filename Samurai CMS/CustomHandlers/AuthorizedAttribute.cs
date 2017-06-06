@@ -17,23 +17,6 @@ namespace Samurai_CMS.CustomHandlers
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //TODO(filip): Implement role guard for each attribute requests
-            //if (!httpContext.User.Identity.IsAuthenticated)
-            //{
-            //    return false;
-            //}
-
-            //var identity = (ClaimsIdentity) httpContext.User.Identity;
-            //string roleString = identity.Claims.Single(c => c.Type == ClaimTypes.Role).Value;
-            //var role = (Roles) Enum.Parse(typeof (Roles), roleString);
-
-            //if (!_allowedRoles.ToList().Contains(role) && role != Models.Roles.Administrator)
-            //{
-            //    httpContext.Response.StatusCode = 400; //Set bad request status code
-            //}
-
-            //return false; //Throw request to HandleUnauthorizedRequest
-
             return Users == httpContext.User.Identity.GetUserName();
         }
 
