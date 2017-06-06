@@ -49,6 +49,9 @@ namespace Samurai_CMS.Controllers
 
             ViewBag.AlreadyAttended = _repositories.EnrollmentRepository.GetAll(e => e.UserId == loggedUserId && e.EditionId == id).Any();
 
+            string userId = User.Identity.GetUserId();
+            ViewBag.IsSpeaker = _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == id).FirstOrDefault()?.Role.Name == Roles.Author.ToString();
+
             return View(edition);
         }
 

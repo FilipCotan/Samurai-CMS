@@ -4,39 +4,32 @@
     ViewBag.Title = "Details";
 }
 
-<h4>@Html.DisplayFor(model => model.Conference.Name)</h4>
-<h1 class="text-capitalize text-center">@Html.DisplayFor(model => model.Title)</h1>
+<h1 class="text-center">@Html.DisplayFor(model => model.Conference.Name)</h1>
+<h1 class="text-capitalize text-center text-uppercase">@Html.DisplayFor(model => model.Title)</h1>
 <br />
 
-<div class="container-fluid">
-    <div class="col-sm-8 col-md-8 col-lg-8"></div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
-        <dl>
-            <dt>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </dt>
-            <dd>
-                @{
-                    string startDayMonth = Model.StartDate.Value.ToString("dd-MMM");
-                }
-                @Html.DisplayFor(model => startDayMonth) @Html.DisplayFor(model => model.Year)
-            </dd>
-        </dl>
-    </div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
-        <dl>
-            <dt>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </dt>
-            <dd>
-                @{ 
-                    string endDayMonth = Model.EndDate.Value.ToString("dd-MMM");
-                }
-                @Html.DisplayFor(model => endDayMonth) @Html.DisplayFor(model => model.Year)
-            </dd>
-        </dl>
-    </div>
-</div>
+@{
+    string startMonth = Model.StartDate.Value.ToString("MMMM");
+    string endMonth = Model.EndDate.Value.ToString("MMMM");
+    string startDay = Model.StartDate.Value.ToString("dd");
+    string endDay = Model.EndDate.Value.ToString("dd");
+}
+@if (startMonth == endMonth )
+{
+    <h3 class="text-center text-uppercase">
+        @Html.DisplayFor(modelItem => startMonth)<text>&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => startDay)<text> - </text>@Html.DisplayFor(modelItem => endDay)<text>,&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => modelItem.Year)
+    </h3>
+}
+else
+{
+    <h3 class="text-center text-uppercase">
+        @Html.DisplayFor(modelItem => startMonth)<text>&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => startDay)<text> - </text>@Html.DisplayFor(modelItem => endDay)<text>,&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => modelItem.Year)
+    </h3>
+}
+
+<br />
+
+
 
 @if (Model.EndDate > DateTime.Today && Model.StartDate > DateTime.Today && !ViewBag.AlreadyAttended)
 {
@@ -47,7 +40,8 @@
 else if (ViewBag.AlreadyAttended)
 {
     <div class="text-center">
-        <p>You allready attented this edition!</p>
+        <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+        <p class="text-danger">You already attended this edition!</p>
     </div>
 }
 else
@@ -57,25 +51,155 @@ else
         <p class="text-danger">Enrollment period has ended</p>
     </div>
 }
-<br />
+
+ @if (ViewBag.AlreadyAttended)
+{
+<div class="text-center">
+    <p>You are enrolled to this edition!</p>
+</div>
+    if (ViewBag.IsSpeaker)
+    {
+<div class="text-center">
+    <h3>Modify abstract or paper</h3>
+</div>
+<div class="text-center">
+    @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+</div>
+    }
+}
+
+<br /><hr /><br />
+
 <div>
     <h3 class="text-center">@Html.DisplayFor(model => model.Description)</h3>
 </div>
 
+<br /><hr /><br />
+
+<div class="text-center container-fluid">
+    <div class="col-lg-12">
+        <h3>@Html.DisplayFor(model => model.Title) membership </h3>
+        <h4>Price: 32 <span class="glyphicon glyphicon-euro"></span></h4>
+        <br /><br />
+        <h4>Here’s what’s included in your @Html.DisplayFor(model => model.Title) membership:</h4>
+        <br />
+    </div>
+        <div class="col-lg-offset-1 col-lg-10 col-lg-offset-1 h4">
+            <table class="table table-striped text-left" id="membership-package-table">
+                <tr>
+                    <td>
+                        A three-day stage program
+                    </td>
+                    <td>
+                        Six sessions of TED's famous 18-minute talks, plus other surprises
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Comfortable simulcast spaces
+                    </td>
+                    <td>
+                        Watch, tweet, blog... and connect around powerful ideas
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Dinners and parties
+                    </td>
+                    <td>
+                        From welcome parties to inspired conversations over dinner, many ways to connect around ideas
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Conference.Name) Gift Bag
+                    </td>
+                    <td>
+                        Hand-picked by @Html.DisplayFor(model => model.Conference.Name) and our partners
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Conference.Name)Connect
+                    </td>
+                    <td>
+                        Our award-winning app for meeting other attendees
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Workshops and activities
+                    </td>
+                    <td>
+                        Explore new interests, dive deeper into an idea or check something off your bucket list
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Conference video archive
+                    </td>
+                    <td>
+                        Watch and rewatch your favorite talks at your leisure with full access to the conference archive
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    <div class="col-lg-offset-2 col-lg-8 col-offset-2 h3">The 
+    @Html.DisplayFor(model => model.Conference.Name) 
+    community actively seeks new members who are leaders in their field and who can make a strong contribution. We review each application in detail, and look forward to reading yours. 
+    @Html.DisplayFor(model => model.Title) @Html.DisplayFor(modelItem => modelItem.Year)
+    will be an event not to be missed!</div>
+
+
+    <div class="col-lg-offset-4 col-lg-4 col-offset-4">
+        @if (Model.EndDate > DateTime.Today && Model.StartDate > DateTime.Today && !ViewBag.AlreadyAttended)
+        {
+            <div class="text-center">
+                @Html.ActionLink("Apply to attend", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+            </div>
+        }
+        else if (ViewBag.AlreadyAttended)
+        {
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+                <p class="text-danger">You already attended this edition!</p>
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+                <p class="text-danger">Enrollment period has ended</p>
+            </div>
+        }
+    </div>
+</div>
+
+<br /><hr /><br />
+
+
+<h2 class="text-center">The speakers of this edition</h2>
+<br />
 <div class="container-fluid">
     @foreach (var author in Model.Participants)
     {
-        if (author.Role.Name == "Author")
-        {
-            <div class="col-sm-3 col-md-3 col-lg-3 text-center">
-                @*Picture of the author. link to his website
-                 <a href='@Url.Action("", "")' class="navbar-brand"><img src="author picturre"/></a>
-                @Html.ActionLink(author.Picture, author.User.WebsiteUrl.ToString)*@
+        if (author.Role.Name == "Author")                   //a se sterge if-ul asta
+        {                                                   //si a se decomenta if-urile de mai jos
+        //if (author.Role.Name == "Author" && author.Paper.IsAccepted != null)
+        //{
+        //    if (author.Paper.IsAccepted == true)
+        //    {
+            <div class="col-sm-6 col-md-3 col-lg-3 text-center">
+                <a href='http://@author.User.WebsiteUrl' target="_blank"><img class="img-circle img-responsive img-center" src="~/Content/ImageResources/no-photo-speaker.png"/></a>
+                <h4>@Html.DisplayFor(model => author.User.Name)</h4>
+                <p>@Html.DisplayFor(model => author.Affiliation)</p>
                 <br />
-                @Html.DisplayFor(model => author.User.Name)
-                @Html.DisplayFor(model => author.Affiliation)
-                @*si ce mai are autorul*@
+                Paper title:
+                <p>@Html.DisplayFor(model => author.Paper.Title)</p>
+                <br />
             </div>
+        //    }
         }
     }
 </div>

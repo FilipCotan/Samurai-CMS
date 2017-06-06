@@ -23,40 +23,40 @@ textarea {
     max-width: 280px;
 }
 
-
+/*behaviour for conferences boxes*/
 .conference-animated-box {
-  position: relative;
-  display: inline-block;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    display: inline-block;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.conference-animated-box::after {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+    .conference-animated-box::after {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
 
-.conference-animated-box:hover {
-  -webkit-transform: scale(1.25, 1.25);
-  transform: scale(1.25, 1.25);
-}
+    .conference-animated-box:hover {
+        -webkit-transform: scale(1.25, 1.25);
+        transform: scale(1.25, 1.25);
+    }
 
-.conference-animated-box:hover::after {
-    opacity: 1;
-}
+        .conference-animated-box:hover::after {
+            opacity: 1;
+        }
 
 /*navbar font*/
 .nav {
-     font-size: 1.1em; 
+    font-size: 1.1em;
 }
 
 /*top padding of the brand image*/
@@ -66,7 +66,7 @@ textarea {
 
 /*nimimum width of the panel body*/
 .panel-body-width {
-    min-width:300px;
+    min-width: 300px;
 }
 
 /*align modal to the center*/
@@ -85,60 +85,63 @@ textarea {
     background-color: transparent;
     border-color: #18bc9c;
 }
-.btn-outline-success:hover {
-    color: #fff;
-    background-color: #18bc9c;
-    border-color: #18bc9c;
-}
 
-.btn-outline-success.focus, .btn-outline-success:focus {
-    -webkit-box-shadow: 0 0 0 2px rgba(92,184,92,.5);
-    box-shadow: 0 0 0 2px rgba(92,184,92,.5);
-}
+    .btn-outline-success:hover {
+        color: #fff;
+        background-color: #18bc9c;
+        border-color: #18bc9c;
+    }
 
+    .btn-outline-success.focus, .btn-outline-success:focus {
+        -webkit-box-shadow: 0 0 0 2px rgba(92,184,92,.5);
+        box-shadow: 0 0 0 2px rgba(92,184,92,.5);
+    }
+
+/*carousel styling*/
 .carousel-inner > .item > img {
     width: 100%;
     height: 450px;
 }
 
-/*
-    Login and register form styling
-*/
+/*Login and register form styling*/
 .auth-field {
-  position: relative;
-  margin-top: 2em;
-}
-.auth-label {
-  position: absolute;
-  height: 2rem;
-  line-height: 2rem;
-  bottom: 0;
-  color: #999;
-  transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-.auth-input {
-  width:200%;
-  font-size: 100%;
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  height: 2rem;
-  line-height: 2rem;
-  border-bottom: 1px solid #eee;
-  color: #777;
-  transition: all .2s ease-in;
-}
-.auth-input:focus {
-  outline: 0;
-  border-color: #ccc;
+    position: relative;
+    margin-top: 2em;
 }
 
-.auth-input:focus + .auth-label,
-.auth-input:valid + .auth-label {
-  transform: translateY(-100%);
-  font-size: 0.90rem;
-  color: #ccc;
+.auth-label {
+    position: absolute;
+    height: 2rem;
+    line-height: 2rem;
+    bottom: 0;
+    color: #999;
+    transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+.auth-input {
+    width: 200%;
+    font-size: 100%;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    height: 2rem;
+    line-height: 2rem;
+    border-bottom: 1px solid #eee;
+    color: #777;
+    transition: all .2s ease-in;
+}
+
+    .auth-input:focus {
+        outline: 0;
+        border-color: #ccc;
+    }
+
+        .auth-input:focus + .auth-label,
+        .auth-input:valid + .auth-label {
+            transform: translateY(-100%);
+            font-size: 0.90rem;
+            color: #ccc;
+        }
 
 
 /* TOGGLE BUTTON */
@@ -203,3 +206,8 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+/*padding for membership table - Edition Details*/
+#membership-package-table tr td {
+    padding: 20px;
+}

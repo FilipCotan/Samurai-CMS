@@ -83,7 +83,8 @@ namespace Samurai_CMS.Controllers
                     PaperFileName = enrollmentViewModel.Paper.FileName,
                     Paper = paperFile,
                     Authors = enrollmentViewModel.Authors,
-                    Keywords = enrollmentViewModel.Keywords
+                    Keywords = enrollmentViewModel.Keywords,
+                    Title = enrollmentViewModel.Title
                 };
 
                 _repositories.PaperRepository.Insert(paper); 
