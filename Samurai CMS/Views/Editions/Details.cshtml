@@ -14,7 +14,7 @@
     string startDay = Model.StartDate.Value.ToString("dd");
     string endDay = Model.EndDate.Value.ToString("dd");
 }
-@if (startMonth == endMonth )
+@if (startMonth == endMonth)
 {
     <h3 class="text-center text-uppercase">
         @Html.DisplayFor(modelItem => startMonth)<text>&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => startDay)<text> - </text>@Html.DisplayFor(modelItem => endDay)<text>,&nbsp;&nbsp;</text>@Html.DisplayFor(modelItem => modelItem.Year)
@@ -39,10 +39,22 @@ else
 }
 else if (ViewBag.AlreadyAttended)
 {
-    <div class="text-center">
-        <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
-        <p class="text-danger">You already attended this edition!</p>
-    </div>
+    if (ViewBag.IsSpeaker)
+    {
+        <div class="text-center">
+            @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+        </div>
+        <div class="text-center">
+            <h4 class="text-info">Modify abstract or paper</h4>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+            <p class="text-danger">You already attended this edition!</p>
+        </div>
+    }
 }
 else
 {
@@ -50,22 +62,6 @@ else
         <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
         <p class="text-danger">Enrollment period has ended</p>
     </div>
-}
-
- @if (ViewBag.AlreadyAttended)
-{
-<div class="text-center">
-    <p>You are enrolled to this edition!</p>
-</div>
-    if (ViewBag.IsSpeaker)
-    {
-<div class="text-center">
-    <h3>Modify abstract or paper</h3>
-</div>
-<div class="text-center">
-    @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
-</div>
-    }
 }
 
 <br /><hr /><br />
@@ -88,10 +84,13 @@ else
             <table class="table table-striped text-left" id="membership-package-table">
                 <tr>
                     <td>
-                        A three-day stage program
+                        @{
+                            string numberOfDays = Math.Floor((Model.EndDate.Value - Model.StartDate.Value).TotalDays).ToString();
+                         }
+                         A @Html.DisplayFor(model => numberOfDays)-day stage program
                     </td>
                     <td>
-                        Six sessions of TED's famous 18-minute talks, plus other surprises
+                        Multiple sessions of @Html.DisplayFor(model => model.Title)'s famous 18-minute talks, plus other surprises
                     </td>
                 </tr>
                 <tr>
@@ -161,10 +160,22 @@ else
         }
         else if (ViewBag.AlreadyAttended)
         {
-            <div class="text-center">
-                <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
-                <p class="text-danger">You already attended this edition!</p>
-            </div>
+            if (ViewBag.IsSpeaker)
+            {
+                <div class="text-center">
+                    @Html.ActionLink("Update", "Create", "Enrollments", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+                </div>
+                <div class="text-center">
+                    <h4 class="text-info">Modify abstract or paper</h4>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-lg disabled">Apply to attend</button>
+                    <p class="text-danger">You already attended this edition!</p>
+                </div>
+            }
         }
         else
         {
