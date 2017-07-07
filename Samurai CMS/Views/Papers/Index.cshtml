@@ -4,11 +4,8 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Author Papers</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -24,19 +21,10 @@
             @Html.DisplayNameFor(model => model.Keywords)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsAccepted)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.AbstractFileName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Abstract)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.PaperFileName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Paper)
         </th>
         <th></th>
     </tr>
@@ -56,24 +44,15 @@
             @Html.DisplayFor(modelItem => item.Keywords)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsAccepted)
+            @Html.ActionLink(item.AbstractFileName, "DownloadAbstract", new { paperId = item.Id })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AbstractFileName)
+            @Html.ActionLink(item.PaperFileName, "DownloadPaper", new { paperId = item.Id })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Abstract)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaperFileName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Paper)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
+            @Html.ActionLink("Review", "Details", new { id=item.Id }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
 }

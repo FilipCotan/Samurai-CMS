@@ -24,23 +24,18 @@ namespace Samurai_CMS.Models
         public int Year { get; set; }
 
         [DisplayName("Abstract Deadline")]        
-        [DataType(DataType.DateTime)]
         public DateTime? AbstractDeadline { get; set; }
 
         [DisplayName("Paper Deadline")]
-        [DataType(DataType.DateTime)]
         public DateTime? PaperDeadline { get; set; }
 
         [DisplayName("Results Date")]
-        [DataType(DataType.DateTime)]
         public DateTime? ResultsDeadline { get; set; }
 
         [DisplayName("Start Date")]
-        [DataType(DataType.DateTime)]
         public DateTime? StartDate { get; set; }
 
         [DisplayName("End Date")]
-        [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
         [DisplayName("Conference")]

@@ -31,12 +31,11 @@ namespace Samurai_CMS.Controllers
         // GET: Editions/Details/5
         public ActionResult Details(int? id)
         {
-            ViewBag.IsAdministrator = User.Identity.GetUserName() == Roles.Administrator.ToString();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var edition = _repositories.EditionRepository.GetById(id);
 
             if (edition == null)
@@ -44,13 +43,36 @@ namespace Samurai_CMS.Controllers
                 return HttpNotFound();
             }
 
-            string loggedUserId = User.Identity.GetUserId();
-            ViewBag.AlreadyAttended = _repositories.EnrollmentRepository.GetAll(e => e.UserId == loggedUserId && e.EditionId == id).Any();
-
             string userId = User.Identity.GetUserId();
+            var userEnrollment =
+                _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == id).FirstOrDefault();
+
+            ViewBag.IsAdministrator = User.Identity.GetUserName() == Roles.Administrator.ToString();
+            ViewBag.IsReviewer = userEnrollment?.Role.Name == Roles.CoChair.ToString() ||
+                                 userEnrollment?.Role.Name == Roles.ProgramCommitteeMember.ToString();
+            ViewBag.AlreadyAttended = _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == id).Any();
             ViewBag.IsSpeaker = _repositories.EnrollmentRepository.GetAll(e => e.UserId == userId && e.EditionId == id).FirstOrDefault()?.Role.Name == Roles.Author.ToString();
 
             return View(edition);
+        }
+
+        public ActionResult Papers(int? editionId)
+        {
+            if (editionId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var authorEnrollments = _repositories.EnrollmentRepository.GetAll(
+                    e => e.EditionId == editionId && e.Role.Name == Roles.Author.ToString());
+
+            if (authorEnrollments == null)
+            {
+                return HttpNotFound();
+            }
+
+            //To do do stuff here.
+
+            return View();
         }
 
         // GET: Editions/Create
@@ -105,7 +127,17 @@ namespace Samurai_CMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _repositories.EditionRepository.Update(edition);
+                var updatedEdition = _repositories.EditionRepository.GetById(edition.Id);
+                updatedEdition.Title = edition.Title;
+                updatedEdition.Year = edition.Year;
+                updatedEdition.AbstractDeadline = edition.AbstractDeadline;
+                updatedEdition.Description = edition.Description;
+                updatedEdition.EndDate = edition.EndDate;
+                updatedEdition.PaperDeadline = edition.PaperDeadline;
+                updatedEdition.ResultsDeadline = edition.ResultsDeadline;
+                updatedEdition.StartDate = edition.StartDate;
+
+                _repositories.EditionRepository.Update(updatedEdition);
                 _repositories.Complete();
 
                 return RedirectToAction("Index");
@@ -139,7 +171,6 @@ namespace Samurai_CMS.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var edition = _repositories.EditionRepository.GetById(id);
-
             _repositories.EditionRepository.Delete(edition);
             _repositories.Complete();
 

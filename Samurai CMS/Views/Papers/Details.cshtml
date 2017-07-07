@@ -1,90 +1,74 @@
-﻿@model Samurai_CMS.Models.AuthorPaper
-
+﻿@model Samurai_CMS.ViewModels.ReviewPaperViewModel
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Review Paper</h2>
 
 <div>
     <h4>AuthorPaper</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Session.Topic)
+            @Html.DisplayNameFor(model => model.Paper.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Session.Topic)
+            @Html.DisplayFor(model => model.Paper.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Paper.Authors)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Paper.Authors)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Authors)
+            @Html.DisplayNameFor(model => model.Paper.Keywords)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Authors)
+            @Html.DisplayFor(model => model.Paper.Keywords)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Keywords)
+            @Html.ActionLink(Model.Paper.AbstractFileName, "DownloadAbstract", new {paperId = Model.Paper.Id})
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Keywords)
+            @Html.ActionLink(Model.Paper.PaperFileName, "DownloadPaper", new {paperId = Model.Paper.Id})
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAccepted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsAccepted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AbstractFileName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AbstractFileName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Abstract)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Abstract)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaperFileName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaperFileName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Paper)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Paper)
-        </dd>
-
     </dl>
+
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(model => model.IsAccepted)
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.IsAccepted, new {@class = "form-control"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(model => model.Recommendations)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Recommendations, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <input type="submit" value="Review" class="btn btn-success" />
+        </div>
+    }
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Paper.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -5,8 +5,6 @@ using System.Web;
 
 namespace Samurai_CMS.Models
 {
-    [Serializable]
-    [Flags]
     public enum Roles
     {
         Administrator = 0, 
